@@ -1,9 +1,5 @@
 # OpenTrade is the best opensource cryptocurrency exchange!
 
-Live version: https://trade.multicoins.org/
-
-Alternative User Interface: dogebithelp@gmail.com
-
 Step-by-step install instructions:
 
 1. Register on the VPS hosting like this https://m.do.co/c/1ece5d76d5cd
@@ -20,7 +16,7 @@ bash install_nvm.sh
 
 nvm install 12.6.0
 
-git clone --recurse-submodules https://github.com/3s3s/opentrade.git
+git clone --recurse-submodules https://github.com/sumcoinlabs/opentrade.git
 cd opentrade/accountsserver
 git checkout master
 cd ..
@@ -68,12 +64,12 @@ The first registered user will be exchange administrator.
 
 For each coin you should create ~/.coin/coin.conf file
 
-This is common example for ~/.marycoin/marycoin.conf
+This is common example for ~/.sumcoin/sumcoin.conf
 
 ```
 rpcuser=long_random_string_one
 rpcpassword=long_random_string_two
-rpcport=12345
+rpcport=3332
 rpcclienttimeout=10
 rpcallowip=127.0.0.1
 server=1
@@ -85,7 +81,7 @@ litemode=1
 staking=0
 addnode=1.2.3.4
 addnode=5.6.7.8
-
+port=3333
 ```
 
 Also, you must encrypt your cryptocurrency wallet with this command.
@@ -112,15 +108,15 @@ All visible coins should be appear in the Wallet. You should create default coin
 
 File ~/opentrade/server/constants.js have settings that you can change
 
-https://github.com/3s3s/opentrade/blob/master/server/constants.js
+https://github.com/sumcoinlabs/opentrade/blob/master/server/constants.js
 
 ```
 exports.NOREPLY_EMAIL = 'no-reply@email.com'; //change no-reply email
 exports.SUPPORT_EMAIL = 'support@email.com'; //change to your valid email for support requests
 const DOMAIN = 'localhost'; //Change to your domain name
 
-exports.TRADE_MAIN_COIN = "Marycoin"; //change Marycoin to your main coin pair
-exports.TRADE_DEFAULT_PAIR = "Litecoin"; //change Litecoin to your default coin pair
+exports.TRADE_MAIN_COIN = "Sumcoin"; //change Sumcoin to your main coin pair
+exports.TRADE_DEFAULT_PAIR = "Bitcoin"; //change Bitcoin to your default coin pair
 exports.share.TRADE_COMISSION = 0.001; //change trade comission percent
 exports.share.DUST_VOLUME = 0.000001; //change minimal order volume
 
@@ -132,8 +128,8 @@ File ~/opentrade/static_pages/chart.html
 
 ```
 const PORT_SSL = 40443; //change to your ssl port (usualy 443)
-const MAIN_COIN = 'Marycoin'; //change Marycoin to your main coin pair same as in constants.js
-const DEFAULT_PAIR = 'Litecoin'; //change Litecoin to your default coin pair same as in constants.js
+const MAIN_COIN = 'Sumcoin'; //change Marycoin to your main coin pair same as in constants.js
+const DEFAULT_PAIR = 'Bitcoin'; //change Litecoin to your default coin pair same as in constants.js
       
 const TRADE_COMISSION = 0.001;
 ```
@@ -145,13 +141,7 @@ After that, you coins should appear on the main page.
 **Donate**
 If you find this script is useful then consider donate please
 
-Bitcoin 36WA1WESULub6Q434bQcnmpnk62oLD7vuQ
 
-Marycoin M9dKNcBYgrbbE2f4tz3ud32KLKj1i9FrmN
-
-Dogecoin DCJRhs9Pjr2FBrrUbKvFeWcYC6ZaF2GTAx
-
-Litecoin LTbDdTijroJEyXt27apQSnuMY4RoXyjdq2
 
 # License
 
