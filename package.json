@@ -7,11 +7,11 @@
     "url": "https://github.com/sumcoinlabs/opentrade.git"
   },
   "dependencies": {
-    "express": "^4.17.1",
-    "ws": "^7.4.5",
-    "sendmail": "^1.6.1",
-    "sqlite3": "^5.0.2",
-    "ejs": "^3.1.6",
-    "cors": "^2.8.5"
+    "express": "latest",
+    "ws": "latest",
+    "sendmail": "latest",
+    "sqlite3": "latest",
+    "ejs": "latest",
+    "cors": "latest"
   }
 }
