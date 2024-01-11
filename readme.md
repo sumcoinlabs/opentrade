@@ -3,26 +3,29 @@
 Step-by-step install instructions:
 
 1. Register on the VPS hosting like this https://m.do.co/c/1ece5d76d5cd
-2. Create "Droplet" Ubuntu 16 x64 / 1GB / 1vCPU / 25 GB SSD
+2. Create "Droplet" Ubuntu 20.04 x64 / 1GB / 1vCPU / 25 GB SSD
 3. Log in to Droplet over SSH (You will receive a email with IP, username and password)
 4
 
 ```
-[sudo] apt-get update
-[sudo] apt-get install build-essential libssl-dev curl -y
-curl -sL https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh -o install_nvm.sh
-bash install_nvm.sh
-[sudo] reboot
+sudo apt-get update
+sudo apt-get install build-essential libssl-dev curl -y
 
-nvm install 12.6.0
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+sudo reboot
+
+nvm install --lts
+nvm use --lts
 
 git clone --recurse-submodules https://github.com/sumcoinlabs/opentrade.git
 cd opentrade/accountsserver
 git checkout master
 cd ..
 
-[sudo] npm install 
-[sudo] npm install -g forever
+npm install
+npm install -g forever
 ```
 
 ## Here is an example of the file ~/opentrade/server/modules/private_constants.js Edit with your configs.
@@ -35,7 +38,7 @@ exports.SSL_KEY = '../ssl_certificates/privkey.pem'; //change to your ssl certif
 exports.SSL_CERT = '../ssl_certificates/fullchain.pem'; //change to your ssl certificates fullchain
 
 exports.walletspassphrase = {
-    'MC' : 'LONG_RANDOM_STRING2',
+    'SUM' : 'LONG_RANDOM_STRING2',
     'BTC' : 'LONG_RANDOM_STRING3',
     'DOGE' : 'LONG_RANDOM_STRING4'
 };
@@ -47,12 +50,12 @@ exports.walletspassphrase = {
 
 ```
 cd ~/opentrade/databaseServer
-[sudo] forever start main.js
+sudo forever start main.js
 cd ~/opentrade/accountsserver
 git checkout master
-[sudo] forever start main.js
+sudo forever start main.js
 cd  ~/opentrade/server
-[sudo] forever start main.js
+sudo forever start main.js
 ```
 
 In your browser address bar, type https://127.0.0.1
