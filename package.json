@@ -4,7 +4,7 @@
   "description": "Open Source Cryptocurrency Exchange",
   "repository": {
     "type": "git",
-    "url": "https://github.com/3s3s/opentrade.git"
+    "url": "https://github.com/sumcoinlabs/opentrade.git"
   },
   "dependencies": {
     "express": "^4.17.1",
