@@ -16,8 +16,8 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 sudo reboot
 
-nvm install --lts
-nvm use --lts
+nvm install 12.6.0
+nvm use 12.6.0
 
 git clone --recurse-submodules https://github.com/sumcoinlabs/opentrade.git
 cd opentrade/accountsserver
@@ -49,13 +49,7 @@ exports.walletspassphrase = {
 **After, you can run exchange**
 
 ```
-cd ~/opentrade/databaseServer
-sudo forever start main.js
-cd ~/opentrade/accountsserver
-git checkout master
-sudo forever start main.js
-cd  ~/opentrade/server
-sudo forever start main.js
+cd ~/opentrade/databaseServer && forever start main.js && cd ~/opentrade/accountsserver && git checkout master && forever start main.js && cd ~/opentrade/server && forever start main.js
 ```
 
 In your browser address bar, type https://127.0.0.1
