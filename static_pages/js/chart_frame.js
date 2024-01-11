@@ -40,7 +40,7 @@ function UpdateMCFromLB()
   const MC_price = storage.getItem("MC_BTC_Price");
   const g_MC_BTC_Price = (MC_price == null || !MC_price.value) ? 1000000 : MC_price.value;
   
-  const MC = coinNameToTicker[utils.MAIN_COIN] ? coinNameToTicker[utils.MAIN_COIN].ticker || 'MC' : 'MC';
+  const SUM = coinNameToTicker[utils.MAIN_COIN] ? coinNameToTicker[utils.MAIN_COIN].ticker || 'SUM' : 'SUM';
   
   fetch('/bitcoinaverage/ticker-all-currencies/')
     .then(response => {
@@ -57,7 +57,7 @@ function UpdateMCFromLB()
       if (!g_LB_Data || !g_LB_Data.USD || !g_LB_Data.RUB)
         return;
       
-      if (MC == 'BTC') g_MC_BTC_Price = 0;
+      if (SUM == 'BTC') g_MC_BTC_Price = 0;
         
       const USD = g_LB_Data.USD.rates.last/(g_MC_BTC_Price+1);
       const BTC = 1/(g_MC_BTC_Price+1);
@@ -67,15 +67,15 @@ function UpdateMCFromLB()
       storage.setItem("LB_DATA", {USD: USD, BTC: BTC, EUR: EUR, RUB: RUB});
       
       $('#id_MC_info').empty();
-      if (MC != 'BTC')
+      if (SUM != 'BTC')
       {
-        $('#id_MC_info').append($('<li class="breadcrumb-item">1 ' + MC + ' = '+BTC.toFixed(8)+' BTC</li>'));
+        $('#id_MC_info').append($('<li class="breadcrumb-item">1 ' + SUM + ' = '+BTC.toFixed(8)+' BTC</li>'));
         $('#id_MC_info').append($('<li class="breadcrumb-item">'+USD.toFixed(3)+' USD</li>'));
         $('#id_MC_info').append($('<li class="breadcrumb-item">'+EUR.toFixed(3)+' EUR</li>'));
       }
       else
       {
-        $('#id_MC_info').append($('<li class="breadcrumb-item">1 ' + MC + ' = '+USD.toFixed(2)+' USD</li>'));
+        $('#id_MC_info').append($('<li class="breadcrumb-item">1 ' + SUM + ' = '+USD.toFixed(2)+' USD</li>'));
         $('#id_MC_info').append($('<li class="breadcrumb-item">'+EUR.toFixed(2)+' EUR</li>'));
       }
       
@@ -228,12 +228,12 @@ function SetChartLegend()
         return setTimeout(SetChartLegend, 1000);
 
     
-  const MC = coinNameToTicker[utils.MAIN_COIN].ticker; 
+  const SUM = coinNameToTicker[utils.MAIN_COIN].ticker; 
   const COIN = coinNameToTicker[g_CurrentPair].ticker
   
 
-  $.getJSON( "/api/v1/public/getmarketsummary?market="+MC+"-"+COIN+"&period="+g_currentChartPeriod, ret => {
-    if (!ret || !ret.success || ret.success != true || MC != coinNameToTicker[utils.MAIN_COIN].ticker || COIN != coinNameToTicker[g_CurrentPair].ticker) 
+  $.getJSON( "/api/v1/public/getmarketsummary?market="+SUM+"-"+COIN+"&period="+g_currentChartPeriod, ret => {
+    if (!ret || !ret.success || ret.success != true || SUM != coinNameToTicker[utils.MAIN_COIN].ticker || COIN != coinNameToTicker[g_CurrentPair].ticker) 
       return;
     
     AddCoinInfo(ret);
@@ -247,12 +247,12 @@ function SetChartLegend()
     const legend = $(
       '<ul class="nav" style="line-height: 30px;">'+
         '<li class="nav-item mr-3"><img src="'+unescape(ret.result.coin_icon_src)+'" width=40 /></li>'+
-        '<li class="nav-item mr-3"><h4>'+COIN+' / '+MC+'</h4></li>'+
+        '<li class="nav-item mr-3"><h4>'+COIN+' / '+SUM+'</h4></li>'+
         '<li class="nav-item mr-2 ml-3">'+group+'High: '+(ret.result.High*1).toFixed(4)+'</li>'+
         '<li class="nav-item mr-2 ml-3">Low: '+(ret.result.Low*1).toFixed(4)+'</li>'+
         '<li class="nav-item mr-2 ml-3">Vol: '+(ret.result.Volume*1).toFixed(4)+'</li>'+
       '</ul>'
-      )//('<h4>'+COIN+' / '+MC+'</h4>');
+      )//('<h4>'+COIN+' / '+SUM+'</h4>');
     $('#chart_legend').empty();
     $('#chart_legend').append(legend);
     

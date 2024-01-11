@@ -65,7 +65,7 @@ function UpdateWallet(data)
     const id_balance = coin+"_balance";
     const id_awaiting = coin+"_awaiting";
     const id_onhold = coin+"_onhold";
-    const MC = coinNameToTicker[utils.MAIN_COIN] ? coinNameToTicker[utils.MAIN_COIN].ticker || 'BTC' : 'BTC';
+    const SUM = coinNameToTicker[utils.MAIN_COIN] ? coinNameToTicker[utils.MAIN_COIN].ticker || 'BTC' : 'BTC';
     
     mapCoinBalance[data.coin.ticker] = data.balance;
     
@@ -88,10 +88,10 @@ function UpdateWallet(data)
     
     const icon = '<img src="'+unescape(data.coin.icon)+'" width=40 />';
     let tdCoin = '';
-     if (data.coin.ticker == MC) {
+     if (data.coin.ticker == SUM) {
         tdCoin = $('<td scope="col" class="align-middle"> '+icon+unescape(data.coin.name)+'</td>');
     } else {
-	    tdCoin = $('<td scope="col" class="align-middle"> <a href="/market/'+MC+'-'+data.coin.ticker+'">'+icon+unescape(data.coin.name)+'</a></td>');
+	    tdCoin = $('<td scope="col" class="align-middle"> <a href="/market/'+SUM+'-'+data.coin.ticker+'">'+icon+unescape(data.coin.name)+'</a></td>');
     }
 //    const tdBalance = $('<td id="'+id_balance+'" scope="col" class="align-middle">'+(data.balance*1).toFixed(8)*1+" "+data.coin.ticker+'</td>');
     const tdBalance = $('<td id="'+id_balance+'" scope="col" class="align-middle"></td>').append(balanceLink);

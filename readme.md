@@ -125,7 +125,7 @@ File ~/opentrade/static_pages/chart.html
 
 ```
 const PORT_SSL = 40443; //change to your ssl port (usualy 443)
-const MAIN_COIN = 'Sumcoin'; //change Marycoin to your main coin pair same as in constants.js
+const MAIN_COIN = 'Sumcoin'; //change Sumcoin to your main coin pair same as in constants.js
 const DEFAULT_PAIR = 'Bitcoin'; //change Litecoin to your default coin pair same as in constants.js
       
 const TRADE_COMISSION = 0.001;

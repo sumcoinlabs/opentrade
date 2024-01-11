@@ -338,7 +338,7 @@ $('#del_coin').click(e => {
         "<form>" +
             "<div class='form-group'>" +
                 "<label class='col-form-label' for='id-delcoin-name'>Coin name</label>" +
-                "<input type='text' class='form-control' id='id-delcoin-name' placeholder='Marycoin'>" +
+                "<input type='text' class='form-control' id='id-delcoin-name' placeholder='Sumcoin'>" +
             "</div>" +
         "</form>";
         
@@ -363,11 +363,11 @@ $('#add_coin').click(e => {
         "<form>" +
             "<div class='form-group'>" +
                 "<label class='col-form-label' for='id-newcoin-name'>Coin name</label>" +
-                "<input type='text' class='form-control' id='id-newcoin-name' placeholder='Marycoin'>" +
+                "<input type='text' class='form-control' id='id-newcoin-name' placeholder='Sumcoin'>" +
             "</div>" +
             "<div class='form-group'>" +
                 "<label class='col-form-label' for='id-newcoin-ticker'>Coin ticker</label>" +
-                "<input type='text' class='form-control' id='id-newcoin-ticker' placeholder='MC'>" +
+                "<input type='text' class='form-control' id='id-newcoin-ticker' placeholder='SUM'>" +
             "</div>" +
             "<div class='form-group'>" +
                 "<label class='col-form-label' for='id-newcoin-icon'>Icon URL</label>" +
