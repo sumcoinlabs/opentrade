@@ -21,13 +21,13 @@ exports.share = {
    recaptchaEnabled: false,
    emailVerificationEnabled: 'enabled', //'disabled' // !!! WARNING !!! DANGER !!! DO NOT CHANGE IT IN PRODUCTION !!! FOR TESTS ONLY !!!
    pinVerificationEnabled: 'enabled', //'disabled'
-   
+
    TRADE_COMISSION: 0.001, //change trade comission percent
    DUST_VOLUME: 0.000001, //change minimal order volume
-   
+
    TRADE_MAIN_COIN: "Sumcoin",
    TRADE_MAIN_COIN_TICKER: "SUM",
-   TRADE_DEFAULT_PAIR: "Litecoin"
+   TRADE_DEFAULT_PAIR: "Bitcoin"
 };
 
 exports.SESSION_TIME = 3600*1000; //one hour
@@ -136,7 +136,7 @@ exports.dbTables = [
         ],
         'commands' : 'FOREIGN KEY(coin) REFERENCES coins(name)'
    },
-   
+
    {
       'name' : 'history',
       'cols' : [
@@ -286,12 +286,12 @@ exports.IsAllowedAddress = function(addr)
 {
     if (PRIVATE.IsUnlimitedAddress && PRIVATE.IsUnlimitedAddress(addr))
         return true;
-        
+
     if (!g_IP_connections[addr]) g_IP_connections[addr] = {n: 0};
     if (g_IP_connections[addr].n < 0) g_IP_connections[addr].n = 0;
     if (g_IP_connections[addr].n > MAX_IP_CONNECTIONS)
         return false;
-    
+
     g_IP_connections[addr].n++;
     return true;
 }
@@ -299,7 +299,7 @@ exports.ReleaseAddress = function(addr)
 {
     if (PRIVATE.IsUnlimitedAddress && PRIVATE.IsUnlimitedAddress(addr))
         return;
-        
-    if (g_IP_connections[addr] && g_IP_connections[addr].n > 0) 
+
+    if (g_IP_connections[addr] && g_IP_connections[addr].n > 0)
         g_IP_connections[addr].n--;
 }
