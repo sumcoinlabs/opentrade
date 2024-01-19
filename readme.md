@@ -34,8 +34,6 @@ npm install -g forever
 
 exports.recaptcha_priv_key = 'YOUR_GOOGLE_RECAPTCHA_PRIVATE_KEY';
 exports.password_private_suffix = 'LONG_RANDOM_STRING1';
-exports.SSL_KEY = '../ssl_certificates/privkey.pem'; //change to your ssl certificates private key
-exports.SSL_CERT = '../ssl_certificates/fullchain.pem'; //change to your ssl certificates fullchain
 
 exports.walletspassphrase = {
     'SUM' : 'LONG_RANDOM_STRING2',
@@ -43,7 +41,16 @@ exports.walletspassphrase = {
     'DOGE' : 'LONG_RANDOM_STRING4'
 };
 ```
+**You will need a domain name and SSL for this to work**
+```
+sudo apt update
+sudo apt install certbot
+sudo certbot certonly --standalone -d domain.com -d www.domain.com
 
+Reference that in ~/opentrade/server/modules/private_constants.js: example "/etc/letsencrypt/live/domain.com/privkey.pem"
+exports.SSL_KEY = '/etc/letsencrypt/live/domain.com/privkey.pem'; //change to your ssl certificates private key
+exports.SSL_CERT = '/etc/letsencrypt/live/domain.com/fullchain.pem'; //change to your ssl certificates fullchain
+```
 **You MUST change default value exports.password_private_suffix !**
 
 **After, you can run exchange**
@@ -64,11 +71,11 @@ For each coin you should create ~/.coin/coin.conf file
 This is common example for ~/.sumcoin/sumcoin.conf
 
 ```
-rpcuser=long_random_string_one
-rpcpassword=long_random_string_two
+rpcuser=long_username_string
+rpcpassword=long_password_string
 rpcport=3332
 rpcclienttimeout=10
-rpcallowip=127.0.0.1
+rpcallowip=127.0.0.1 //IP of your core client
 server=1
 daemon=1
 upnp=0
