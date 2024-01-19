@@ -2,10 +2,10 @@
 
 Step-by-step install instructions:
 
-1. Register on the VPS hosting like this https://m.do.co/c/1ece5d76d5cd
-2. Create "Droplet" Ubuntu 20.04 x64 / 1GB / 1vCPU / 25 GB SSD
+1. Register on the VPS hosting like this https://m.do.co/c/b7bfce81f64d
+2. Create "Droplet" Ubuntu 20.04 x64 / 2GB / 2vCPU / 25 GB SSD
 3. Log in to Droplet over SSH (You will receive a email with IP, username and password)
-4
+
 
 ```
 sudo apt-get update
@@ -53,6 +53,20 @@ exports.SSL_CERT = '/etc/letsencrypt/live/domain.com/fullchain.pem'; //change to
 ```
 **You MUST change default value exports.password_private_suffix !**
 
+**You have to setup postfix to send/get emails**
+```
+sudo apt update
+sudo apt install postfix
+//During the installation, you will be prompted to select the mail server configuration type.
+//Choose "Internet Site" if you want to send and receive emails over the internet.
+// Postfix Configuration
+// enter the domain name (YOUR-domain.com) after choosing Internet site
+// You can upodate the mail configuration later with
+sudo dpkg-reconfigure postfix
+//To test if Postfix is working, you can send a test email from the command line:
+echo "This is a test email." | mail -s "Test Email" your-email@example.com
+
+```
 **After, you can run exchange**
 
 ```
