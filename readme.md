@@ -14,7 +14,7 @@ sudo apt-get install build-essential libssl-dev curl -y
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-sudo reboot
+sudo reboot now
 
 nvm install 12.6.0
 nvm use 12.6.0
@@ -58,26 +58,44 @@ exports.SSL_CERT = '/etc/letsencrypt/live/domain.com/fullchain.pem'; //change to
 **You have to setup postfix to send/get emails**
 ```
 sudo apt update
-sudo apt install postfix
+sudo apt install -y postfix
+```
 //During the installation, you will be prompted to select the mail server configuration type.
 //Choose "Internet Site" if you want to send and receive emails over the internet.
 // Postfix Configuration
 // enter the domain name (YOUR-domain.com) after choosing Internet site
 // You can upodate the mail configuration later with
-sudo dpkg-reconfigure postfix
-//To test if Postfix is working, you can send a test email from the command line:
-echo "This is a test email." | mail -s "Test Email" your-email@example.com
-
 ```
-**After, you can run exchange**
+sudo dpkg-reconfigure postfix
+```
+// Install mailutils
+```
+sudo apt install -y mailutils
+```
+// DNS Record - TXT - You will need a TXT record in your domain's DNS like this or it won't deliver
+```
+v=spf1 mx a:domain.com ip4:YOUR-IPv4-ADDRESS ~all
+```
+//To test if Postfix is working, you can send a test email from the command line:
+```
+echo "This is a test email." | mail -s "Test Email" your-email@example.com
+```
+
+**After that succeeds, you can run the exchange with this command.  Note, you do not need && git checkout master after first start**
 
 ```
 cd ~/opentrade/databaseServer && forever start main.js && cd ~/opentrade/accountsserver && git checkout master && forever start main.js && cd ~/opentrade/server && forever start main.js
 ```
-
+**Second time starting**
+```
+cd ~/opentrade/databaseServer && forever start main.js && cd ~/opentrade/accountsserver && forever start main.js && cd ~/opentrade/server && forever start main.js
+```
 In your browser address bar, type https://127.0.0.1
 You will see OpenTrade.
-
+**To Stop servers, run**
+```
+forever stopall
+```
 The first registered user will be exchange administrator. 
 
 # Add trade pairs
