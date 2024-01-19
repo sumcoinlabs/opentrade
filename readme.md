@@ -72,11 +72,93 @@ sudo dpkg-reconfigure postfix
 ```
 sudo apt install -y mailutils
 ```
-// DNS Record - TXT - You will need a TXT record in your domain's DNS like this or it won't deliver
+// DNS Record in TXT - SPF record. You will need a TXT record in your domain's DNS like this or it won't deliver
 ```
 v=spf1 mx a:domain.com ip4:YOUR-IPv4-ADDRESS ~all
 ```
-//To test if Postfix is working, you can send a test email from the command line:
+## Setting Up DKIM for YOUR-DOMAIN.com Server
+
+DKIM (DomainKeys Identified Mail) is an email authentication method that helps improve email deliverability and 
+reduces the chances of emails being marked as spam. Follow these steps to set up DKIM for your YOUR-DOMAIN.com server.
+
+### Step 1: Generate DKIM Key Pair
+
+First, we need to generate a DKIM key pair using OpenDKIM. If OpenDKIM is not already installed on your server, 
+you can install it with the following command:
+```
+sudo apt install opendkim opendkim-tools
+```
+Generate the key pair using the opendkim-genkey command, replacing selector with your chosen selector 
+(a string that helps identify the key pair):
+```
+sudo opendkim-genkey -t -s selector -d YOUR-DOMAIN.com
+```
+This will create two files: selector.private (the private key) and selector.txt (the public key). 
+Keep the private key secure.
+
+### Step 2: Publish the Public Key in DNS
+Next, we need to publish the public key in DNS. Open the selector.txt file to view the public key, 
+which will look something like this:
+selector._domainkey IN TXT "v=DKIM1; h=sha256; k=rsa; p=<your-public-key>"
+
+Copy the entire TXT record, including the quotes.
+
+Log in to your DNS provider's control panel or domain registrar's website.
+
+Add a new DNS TXT record with the following information:
+
+Hostname: selector._domainkey (replace selector with your chosen selector)
+Value: Paste the entire TXT record you copied from selector.txt
+TTL (Time to Live): Set an appropriate TTL (e.g., 600 seconds)
+Save the DNS record. It may take some time for DNS propagation.
+
+### Step 3: Configure OpenDKIM
+Edit the OpenDKIM configuration file:
+```
+sudo nano /etc/opendkim.conf
+```
+Add the following lines to the configuration file, adjusting them as needed:
+
+Domain                  YOUR-DOMAIN.com
+KeyFile                 /etc/opendkim/selector.private
+Selector                selector
+
+Domain: Your domain (YOUR-DOMAIN.com).
+KeyFile: Path to the private key file you generated.
+Selector: The selector you chose earlier.
+Save the file and exit the text editor.
+
+Edit the OpenDKIM defaults file:
+```
+sudo nano /etc/default/opendkim
+```
+Uncomment and modify the following line to specify the socket:
+```
+SOCKET="inet:12345@localhost" # Replace 12345 with the port you want to use
+```
+Save the file and exit.
+
+### Step 4: Restart OpenDKIM and Your Email Server
+Restart the OpenDKIM service:
+```
+sudo systemctl restart opendkim
+```
+Restart your email server (e.g., Postfix or whatever you are using):
+```
+sudo systemctl restart postfix
+```
+### Step 5: Test DKIM Signing
+Send a test email from your server to an email address you control (e.g., a Gmail account).
+
+Check the email headers in your recipient's mailbox to verify that the DKIM signature is present and valid.
+
+You can use email header analyzer tools online to inspect the DKIM signature.
+
+Once DKIM is set up and functioning correctly, your outgoing emails should be signed with DKIM, 
+which can improve their deliverability and reduce the chances of being marked as spam.
+
+## TEST EMAILS 
+//To test if Postfix and emails are working, you can send a test email from the command line:
 ```
 echo "This is a test email." | mail -s "Test Email" your-email@example.com
 ```
