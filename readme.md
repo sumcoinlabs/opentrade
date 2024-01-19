@@ -18,6 +18,8 @@ sudo reboot
 
 nvm install 12.6.0
 nvm use 12.6.0
+nvm alias default 12.6.0
+echo "12.6.0" > .nvmrc
 
 git clone --recurse-submodules https://github.com/sumcoinlabs/opentrade.git
 cd opentrade/accountsserver
